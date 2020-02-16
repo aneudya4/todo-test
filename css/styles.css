@@ -1,0 +1,259 @@
+html {
+  font-size: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: rgba(9, 119, 192, 0.884);
+  padding: 10rem;
+}
+
+main {
+  background: white;
+  border-radius: 5px;
+  padding: 5rem 10rem;
+  margin: 0 auto;
+  width: 50%;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  color: rgba(56, 55, 55, 0.658);
+  font-size: 3rem;
+}
+
+header span {
+  background: rgba(9, 119, 192, 0.884);
+  padding: 1rem 2rem;
+  border-radius: 50%;
+  font-size: 4rem;
+  color: white;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+header span:hover {
+  background: rgba(3, 94, 155, 0.884);
+  transform: scale(1.1);
+  transition: all ease-in 0.5s;
+}
+
+form {
+  display: block;
+}
+form span {
+  color: red;
+  display: block;
+  font-size: 1rem;
+  display: none;
+}
+
+input[type='text'] {
+  font-size: 2rem;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  width: 100%;
+  text-transform: capitalize;
+}
+
+button,
+input:focus {
+  outline: none;
+}
+
+button {
+  text-transform: capitalize;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  width: 100%;
+  background: rgba(9, 119, 192, 0.884);
+  color: white;
+  font-size: 2.5rem;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  background: rgba(3, 94, 155, 0.884);
+}
+
+.todos {
+  font-size: 2rem;
+}
+
+.todos h2 {
+  color: rgba(9, 119, 192, 0.884);
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+ul li {
+  display: flex;
+  margin-top: 2rem;
+  align-items: center;
+  justify-content: space-evenly;
+  transition-property: right, left;
+  transition-duration: 2s;
+  position: absolute;
+}
+
+li.done {
+  animation: slide 1s backwards;
+}
+
+.todo-content {
+  margin-left: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+  /* align-items is optional at the end */
+  top: 9px;
+}
+
+.underline {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background: lightgray;
+  position: absolute;
+  left: 0px;
+  bottom: -4px;
+}
+
+.line-thought {
+  bottom: 9px;
+  transition: all ease-in 0.3s;
+}
+
+.done-todo {
+  color: lightgray;
+}
+
+/* animation  for  checkbox*/
+.checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cccbcb;
+  border: none;
+  color: rgba(9, 119, 192, 0.884);
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+  border-radius: 50%;
+  border-radius: 50%;
+  /* transform: scale(2.5); */
+}
+.checkbox:hover {
+  background: #9faab7;
+}
+.checkbox:checked {
+  background: white;
+  border-radius: 0;
+}
+.checkbox:checked::before {
+  height: 20px;
+  width: 40px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 36.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.checkbox:checked::after {
+  border-radius: 50%;
+  animation: click-wave 0.65s;
+  background: rgba(9, 119, 192, 0.884);
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+
+/* animate checkbox when clicked */
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -80px;
+    opacity: 0;
+  }
+}
+
+/* animate li when added */
+.animate {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 2s;
+  animation-name: animatebottom;
+  animation-duration: 1.2s;
+}
+
+@-webkit-keyframes animatebottom {
+  from {
+    bottom: -50px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0px;
+    opacity: 1;
+  }
+}
+@keyframes animatebottom {
+  from {
+    bottom: -50px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+/* animate li when remove */
+@-webkit-keyframes slide {
+  0% {
+    left: 0px;
+  }
+  75% {
+    opacity: 0.4;
+  }
+
+  100% {
+    left: 1000px;
+    opacity: 0.1;
+  }
+}
