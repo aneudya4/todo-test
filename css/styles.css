@@ -146,7 +146,6 @@ li.done {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
-  -o-appearance: none;
   appearance: none;
   position: relative;
   top: 13.33333px;
@@ -167,7 +166,6 @@ li.done {
   z-index: 1000;
   border-radius: 50%;
   border-radius: 50%;
-  /* transform: scale(2.5); */
 }
 .checkbox:hover {
   background: #9faab7;
@@ -216,22 +214,10 @@ li.done {
 /* animate li when added */
 .animate {
   position: relative;
-  -webkit-animation-name: animatebottom;
-  -webkit-animation-duration: 2s;
   animation-name: animatebottom;
   animation-duration: 1.2s;
 }
 
-@-webkit-keyframes animatebottom {
-  from {
-    bottom: -50px;
-    opacity: 0;
-  }
-  to {
-    bottom: 0px;
-    opacity: 1;
-  }
-}
 @keyframes animatebottom {
   from {
     bottom: -50px;
@@ -244,7 +230,7 @@ li.done {
 }
 
 /* animate li when remove */
-@-webkit-keyframes slide {
+@keyframes slide {
   0% {
     left: 0px;
   }

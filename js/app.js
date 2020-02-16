@@ -6,9 +6,8 @@ const datesHeading = document.querySelector('header h1');
 const taskHeading = document.querySelector('.todos h2');
 const formErrorSpan = document.querySelector('form span');
 const addSpanIcon = document.querySelector('header span i');
-const now = new Date();
-
 const setDates = () => {
+  const now = new Date();
   var days = [
     'Sunday',
     'Monday',
@@ -52,6 +51,8 @@ const addTodos = () => {
 
     const value = inputText.value;
     if (value) {
+      const now = new Date();
+
       // <==== creating all ELEMENTS ====>
       const list = document.createElement('LI');
       const labelContainer = document.createElement('LABEL');
@@ -72,6 +73,7 @@ const addTodos = () => {
       spanTime.textContent = `${now.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
+        seconds: 'numeric',
         hour12: true
       })}`;
       childrenDiv.classList.add('underline');
@@ -101,8 +103,10 @@ const addTodos = () => {
 const doneTodo = () => {
   ul.addEventListener('click', e => {
     if (e.target.tagName === 'INPUT') {
-      const divTodoContainer = e.target.parentElement.nextElementSibling;
+      // DISABLES THE CLICK
+      e.target.disabled = true;
 
+      const divTodoContainer = e.target.parentElement.nextElementSibling;
       if (e.target.checked) {
         divTodoContainer.classList.add('done-todo');
         divTodoContainer.firstElementChild.classList.add('line-thought');
@@ -144,8 +148,7 @@ const showHideForms = () => {
   });
 };
 
+setDates();
 showHideForms();
 addTodos();
-
-setDates();
 doneTodo();
