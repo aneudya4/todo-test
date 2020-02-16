@@ -7,8 +7,9 @@ const taskHeading = document.querySelector('.todos h2');
 const formErrorSpan = document.querySelector('form span');
 const addSpanIcon = document.querySelector('header span i');
 const setDates = () => {
-  const now = new Date();
-  var days = [
+  let now = new Date();
+
+  let days = [
     'Sunday',
     'Monday',
     'Tuesday',
@@ -17,7 +18,7 @@ const setDates = () => {
     'Friday',
     'Saturday'
   ];
-  var months = [
+  let months = [
     'January',
     'February',
     'March',
@@ -31,8 +32,8 @@ const setDates = () => {
     'November',
     'December'
   ];
-  var day = days[now.getDay()];
-  var month = months[now.getMonth()];
+  const day = days[now.getDay()];
+  const month = months[now.getMonth()];
   datesHeading.textContent = `${day}, ${month}  ${now.getDate()}`;
 };
 
@@ -148,7 +149,13 @@ const showHideForms = () => {
   });
 };
 
-setDates();
-showHideForms();
-addTodos();
-doneTodo();
+const runApp = () => {
+  setInterval(() => {
+    setDates();
+  }, 0);
+  showHideForms();
+  addTodos();
+  doneTodo();
+};
+
+runApp();
