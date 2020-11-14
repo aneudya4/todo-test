@@ -16,7 +16,7 @@ const setDates = () => {
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday'
+    'Saturday',
   ];
   let months = [
     'January',
@@ -30,7 +30,7 @@ const setDates = () => {
     'September',
     'October',
     'November',
-    'December'
+    'December',
   ];
   const day = days[now.getDay()];
   const month = months[now.getMonth()];
@@ -43,66 +43,92 @@ const countTodos = () => {
   taskHeading.textContent = `${ulLength} ${ulLength === 1 ? 'task' : 'tasks'}`;
 };
 
+const addToLocalStorage = (value, time) => {
+  const todos = localStorage.getItem('todos');
+  if (!todos) {
+    localStorage.setItem('todos', JSON.stringify([{ value, time }]));
+  } else {
+    const todosArr = JSON.parse(todos);
+    const newTodos = [...todosArr, { value, time }];
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+  }
+};
+const getTodosFromLocalStorage = () => {
+  const todos = localStorage.getItem('todos');
+  if (todos) {
+    const todosArr = JSON.parse(todos);
+    for (let i = 0; i < todosArr.length; i++) {
+      addToUI(todosArr[i].value, todosArr[i].time);
+    }
+  }
+};
+
 const addTodos = () => {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     // <=== hidding error span ===>
     formErrorSpan.style.display = 'none';
     // <=== hidding error span ===>
 
     const value = inputText.value;
-    if (value) {
+    if (value.trim() !== '') {
       const now = new Date();
-
-      // <==== creating all ELEMENTS ====>
-      const list = document.createElement('LI');
-      const labelContainer = document.createElement('LABEL');
-      const inputCheckBox = document.createElement('INPUT');
-      const parentDiv = document.createElement('DIV');
-      const childrenDiv = document.createElement('DIV');
-      const spanTodo = document.createElement('SPAN');
-      const spanTime = document.createElement('SPAN');
-      // <==== creating all ELEMENTS ====>
-
-      //  adding all classes
-      list.classList.add('animate');
-      inputCheckBox.setAttribute('type', 'checkbox');
-      inputCheckBox.classList.add('checkbox');
-      inputCheckBox.classList.add('option-input');
-      parentDiv.classList.add('todo-content');
-      spanTodo.textContent = value;
-      spanTime.textContent = `${now.toLocaleString('en-US', {
+      const timeOfCreation = now.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
         seconds: 'numeric',
-        hour12: true
-      })}`;
-      childrenDiv.classList.add('underline');
-      // adding all classes
+        hour12: true,
+      });
+      // <=== adding to localStorage ===>
+      addToLocalStorage(value, timeOfCreation);
 
-      // appending to parent Elements
-      labelContainer.appendChild(inputCheckBox);
-      parentDiv.appendChild(childrenDiv);
-      parentDiv.appendChild(spanTodo);
-      parentDiv.appendChild(spanTime);
-      list.appendChild(labelContainer);
-      list.appendChild(parentDiv);
-      // appending to parent Elements
+      addToUI(value, timeOfCreation);
 
-      // appending to DOM
-      ul.appendChild(list);
-      // appending To DOM
-
-      countTodos();
       inputText.value = '';
     } else {
       formErrorSpan.style.display = 'block';
     }
   });
 };
+const addToUI = (value, timeOfCreation) => {
+  // <==== creating all ELEMENTS ====>
+  const list = document.createElement('LI');
+  const labelContainer = document.createElement('LABEL');
+  const inputCheckBox = document.createElement('INPUT');
+  const parentDiv = document.createElement('DIV');
+  const childrenDiv = document.createElement('DIV');
+  const spanTodo = document.createElement('SPAN');
+  const spanTime = document.createElement('SPAN');
+  // <==== creating all ELEMENTS ====>
+
+  //  adding all classes
+  list.classList.add('animate');
+  inputCheckBox.setAttribute('type', 'checkbox');
+  inputCheckBox.classList.add('checkbox');
+  inputCheckBox.classList.add('option-input');
+  parentDiv.classList.add('todo-content');
+  spanTodo.textContent = value;
+  spanTime.textContent = `${timeOfCreation}`;
+  childrenDiv.classList.add('underline');
+  // adding all classes
+
+  // appending to parent Elements
+  labelContainer.appendChild(inputCheckBox);
+  parentDiv.appendChild(childrenDiv);
+  parentDiv.appendChild(spanTodo);
+  parentDiv.appendChild(spanTime);
+  list.appendChild(labelContainer);
+  list.appendChild(parentDiv);
+  // appending to parent Elements
+
+  // appending to DOM
+  ul.appendChild(list);
+  // appending To DOM
+  countTodos();
+};
 
 const doneTodo = () => {
-  ul.addEventListener('click', e => {
+  ul.addEventListener('click', (e) => {
     if (e.target.tagName === 'INPUT') {
       // DISABLES THE CLICK
       e.target.disabled = true;
@@ -122,12 +148,25 @@ const doneTodo = () => {
     }
   });
 };
-
+const removeFromLocalStorage = (value, timeOfCreation) => {
+  const todosArr = JSON.parse(localStorage.getItem('todos'));
+  const todosIndex = todosArr.findIndex(
+    (todo) => todo.value === value && todo.time === timeOfCreation
+  );
+  todosArr.splice(todosIndex, 1);
+  localStorage.removeItem('todos');
+  localStorage.setItem('todos', JSON.stringify(todosArr));
+};
 const removeTodo = () => {
   const list = ul.childNodes;
   setTimeout(() => {
-    list.forEach(li => {
+    list.forEach((li) => {
       if (li.classList.contains('done')) {
+        const value = document.querySelector(
+          'li.done .todo-content span:nth-child(2) '
+        );
+        const timeOfCreation = li.lastChild.lastChild.textContent;
+        removeFromLocalStorage(value.textContent, timeOfCreation);
         ul.removeChild(li);
         countTodos();
       }
@@ -155,6 +194,7 @@ const runApp = () => {
   }, 0);
   showHideForms();
   addTodos();
+  getTodosFromLocalStorage();
   doneTodo();
 };
 
