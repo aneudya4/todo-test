@@ -14,7 +14,7 @@
 
 <img src="./readme_assets/task-app.png" width="100%">
 
-<h2 align="center"><a  href="https://aneudy-todo.netlify.app/">Live Demo</a></h2>
+<h2 align="center"><a  target="_blank" href="https://aneudy-todo.netlify.app/">Live Demo</a></h2>
 
 ### [Contributions are Welcome](https://github.com/aneudya4/movie-app.git)
 
@@ -27,12 +27,12 @@
 
 ## How to Add
 
-- **START** Type movie name into input box
+- **START** Type into the input box
 - **choose and submit** Click enter or add task button.
 
 ## How to Delete
 
-- **START** Click gray circle checkbox of done task
+- **START** Click gray circle checkbox of the finished task
   <img src="./readme_assets/remove-task.gif" width="80%"></p>
 
 ## Project setup:
